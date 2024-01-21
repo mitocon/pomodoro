@@ -22,6 +22,7 @@ services:
 
   mysql:
     image: mysql:8.0
+    platform: linux/amd64 # for EC2(x86) instance
     ports:
       - "3306:3306"
     environment:
@@ -36,6 +37,8 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
     ports:
       - "8080:80"
     environment:
@@ -43,8 +46,6 @@ services:
       - PMA_HOST=mysql
       - PMA_USER=root
       - PMA_PASSWORD=secret
-    container_name: "phpmyadmin"
-
 volumes:
   mysql_data:
 
