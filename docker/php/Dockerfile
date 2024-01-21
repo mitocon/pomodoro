@@ -3,6 +3,9 @@ FROM php:8.1-fpm
 # Laravelの要件に必要なPHP拡張機能をインストール
 RUN docker-php-ext-install pdo pdo_mysql
 
+# php.iniをコンテナにコピー
+COPY ./docker/php/php.ini /usr/local/etc/php/
+
 # Composerのインストール
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

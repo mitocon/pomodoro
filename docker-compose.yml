@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   php:
+    image: my-laravel-project
     build:
       context: .
       dockerfile: docker/php/Dockerfile
@@ -28,9 +29,23 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: secret
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - mysql_data:/var/lib/mysql
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=secret
+    container_name: "phpmyadmin"
+
 volumes:
   mysql_data:
+
 
